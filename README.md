@@ -28,4 +28,4 @@
 ## 备注
 * 姓名：潘承安 学号：B19030235 QQ:1286435758
 * 姓名：冯大宇 学号：B19030313 QQ:2218785142
-*关于留言板的介绍：https://github.com/IGFeng/Happiness
+* 关于留言板的介绍：https://github.com/IGFeng/Happiness
