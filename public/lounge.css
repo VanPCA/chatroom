@@ -1,0 +1,215 @@
+* {
+    padding: 0;
+    margin: 0;
+    font-family: "Microsoft Yahei";
+}
+html,
+body
+{
+    width: 100%;
+    height: 100%;
+    background-image: url(./background/1.jpg);
+    background-size: 100% 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: changeBg 20s infinite linear;
+}
+
+
+/*更换背景（嗯我知道很傻）*/
+@keyframes changeBg
+{
+    0%{background-image: url(./background/1.jpg);}
+    5%{background-image: url(./background/1.jpg);}
+    15%{background-image: url(./background/2.jpg);}
+    20%{background-image: url(./background/2.jpg);}
+    30%{background-image: url(./background/3.jpg);}
+    35%{background-image: url(./background/3.jpg);}
+    44%{background-image: url(./background/4.jpg);}
+    48%{background-image: url(./background/4.jpg);}
+    58%{background-image: url(./background/5.jpg);}
+    62%{background-image: url(./background/5.jpg);}
+    72%{background-image: url(./background/6.jpg);}
+    76%{background-image: url(./background/6.jpg);}
+    86%{background-image: url(./background/7.jpg);}
+    90%{background-image: url(./background/7.jpg);}
+    100%{background-image: url(./background/1.jpg);}
+}
+
+
+
+.sign-up
+{
+    width:430px;
+    height: 430px;
+    background-color:rgba(255,255,255, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border: royalblue 2px solid;
+}
+
+.box-width
+{
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.sign-up-title
+{
+    color: rgb(43, 134, 253);
+    border-bottom: 4px solid  rgb(43, 134, 253) ;
+    border-top: transparent;
+    border-left: transparent;
+    border-right: transparent;
+    font-size: xx-large;
+    font-weight: bolder;
+}
+
+.head-choose
+{
+    position: relative;
+    display: flex;
+    margin: 10%;
+}
+
+.head-choose img
+{
+    width: 90px;
+    height: 90px;
+    transition: all 0.2s linear;
+}
+
+.arrow {
+    z-index: 3;
+    position: relative;
+    font-size: 30px;
+    height: 100%;
+    width: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: skyblue;
+}
+
+.arrow:hover
+{
+    cursor: pointer;
+}
+
+.left-arrow
+{
+    left: 0px;
+}
+.before-arrow {
+    width: 0px;
+    height: 0px;
+    border-width: 30px;
+    border-style: solid;
+    border-color: transparent skyblue transparent transparent;
+}
+.right-arrow {
+    right: 0;
+}
+
+.after-arrow{
+     width: 0px;
+    height: 0px;
+    border-width: 30px;
+    border-style: solid;
+    border-color: transparent  transparent transparent skyblue; 
+}
+
+
+.img-setting
+{
+    margin:0px -15px;
+}
+
+
+.p1
+ {
+    transform: scale(0.6);
+    z-index: 1;
+
+}
+
+.p1:hover
+{
+    transform: scale(0.8);
+}
+
+.p2
+ {
+    transform: scale(0.8);
+    z-index: 2;
+
+}
+
+.p2:hover
+{
+    transform: scale(1)
+}
+
+.p3
+{
+    transform: scale(1);
+    z-index: 3 ;
+
+}
+
+.p3:hover {
+    transform: scale(1.2);
+}
+
+
+
+.nameSet
+{
+    display: flex;
+    justify-content: center;
+    width: 80%;
+}
+
+#inputName
+{
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    outline-color: rgb(43, 134, 253) ;
+    border: 1px solid rgb(43, 134, 253);
+    font-size: 16px;
+}
+
+.nameDecide
+{
+    width: 80%;
+    display: flex;
+    justify-content: center;
+}
+
+#nameSubmit
+{
+    width: 100%;
+    padding: 10px 20px;
+    outline: none;
+    border: none;
+    background: rgb(43, 134, 253);
+    color: white;
+    font-size: 16px;
+}
+
+#nameSubmit:hover
+{
+    cursor: pointer;
+}
+
+
+
+
+
+

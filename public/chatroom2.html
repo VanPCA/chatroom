@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatRoom</title>
+    <!--引入jquery-->
+    <script src="./jquery-3.4.1.min.js"></script>
+    <link rel="stylesheet" href="chatroom.css" type="text/css">
+</head>
+<!--主要显示的地方，有聊天区和输入区-->
+<body>
+    <!--背景图片-->
+    <div id="bgImage"></div>
+   <!--标题-->
+    <h1>聊天室</h1>
+    <h3>把你的开心事说给别人听听呗</h3>
+
+    <!--弹出输入昵称确认框时一起出现背景并阻止页面其他功能
+    <div id="popBoxLayer"></div>
+    <div id="popBox">
+        <form id="decideName" action="">
+            <input id="inputName" autocomplete="off">
+            <input type="button" value="就决定是你了" id="submitName" >
+        </form>
+    </div>-->
+
+    <!--在线成员显示-->
+    <div id="onlineMembers">
+     <p id="totalMembers">在线成员(0)</p>
+     <ui id="memberList"></ui>
+    </div>
+    <!--聊天显示区域-->
+    <div id="messagesContainer"><ul id="messages"> </ul></div>
+        
+    <!--聊天输入区域-->
+    <form id="sendMessage" action="">
+        <input id="words"autocomplete="off">
+        <button >送信</button>
+    </form>
+    <!--退出聊天-->
+    <input type="button" id="exit" value="退出" onclick="closeWin()">
+</body>
+
+<!--引入socket.io-->
+<script src="/socket.io/socket.io.js"></script>
+<!--界面执行的函数-->
+<script >
+    /*处理新加入的用户*/
+    /*创建io对象*/
+    var socketObj = io();
+    //区别和另一个房间的标识
+    var roomId = "chatroom2";
+   /*当进入页面后，向服务器发送joined事件*/
+   socketObj.emit("joined",roomId);
+   /*监听服务器发送的joined事件，并在所有用户页面上显示*/
+    socketObj.on("joined",function inputName(trueName){
+             addChat(trueName+"加入聊天室");
+
+    })
+   //监听yourHead事件，存放头像到客户端
+    socketObj.on("yourHead",function(trueHead){
+        head = trueHead;
+    })
+
+    //存储该用户的昵称
+    socketObj.on("yourName",function(trueName){name = trueName})
+
+   /*监听服务器发送的memberList事件，反馈到所有用户页面*/
+    socketObj.on("userList",function(userList2){
+        var number = userList2.length;
+        document.getElementById("memberList").innerHTML = "";
+        for(var i=0;i<number;i++)
+        {
+            addMember(userList2[i]);
+        }
+        document.getElementById("totalMembers").innerHTML = "在线人数"+"("+number+")";
+    })
+
+    /*处理输入文本*/
+    /*监听服务器发送的message事件*/
+    socketObj.on("message",function(message){
+        m =":"+message;
+    })
+
+//监听head-in-line事件，将头像添加到标签
+    socketObj.on("head-in-line",function(head){
+        headPicture = document.createElement("img");
+        headPicture.src = head;
+        headPicture.className = "head-in-line";
+    })
+
+    //监听服务亲发送的username事件，并在用户页面显示一条信息
+    socketObj.on("username",function(name){
+        var n = document.createElement("div");
+        n.innerHTML = name;
+        if(m!="")
+        {
+            //创建word，存放发送的消息
+            var word = document.createElement("div");
+            word.className = "word";
+            word.innerHTML = m;
+
+            //创建wholeHead，存放头像和昵称
+            var wholeHead = document.createElement("div");
+            wholeHead.className = "line";
+            wholeHead.appendChild(headPicture);
+            wholeHead.appendChild(n)
+
+           //创建textContainer，存放头像和消息
+            var textContainer = document.createElement("div");
+            textContainer.className = "textContainer";
+            textContainer.appendChild(wholeHead);
+            textContainer.appendChild(word);
+
+            //创建一条li
+            var oneLine = document.createElement("li");
+            oneLine.appendChild(textContainer);
+
+            //把li添加到ul（信息列表）
+            document.getElementById("messages").appendChild(oneLine);
+
+        }
+    })
+
+
+    /*当用户退出时把信息显示在其余用户界面上*/
+    socketObj.on("exit",function(name){
+        addChat(name+"已退出聊天室");
+    })
+
+    /*按下表单提交，执行函数*/
+    $("form").submit(function () {
+        var message = $("#words").val();
+        /*发送message和username事件，并发送message和name信息*/
+        socketObj.emit("message",message,roomId);
+        socketObj.emit("head-in-line",head,roomId);
+        socketObj.emit("username",name,roomId);
+        /*清空输入框*/
+        $("#words").val("");
+        /*阻止表单提交*/
+        return false;
+    })
+
+    /*添加一条消息到message表中*/
+    function addChat(chat){
+        $("#messages").append($('<li>').text(chat));
+    }
+
+    /*添加一条消息到在线用户表中*/
+    function addMember(memberName){
+        $("#memberList").append($('<li>').text(memberName));
+    }
+
+
+    /*退出时执行的函数*/
+    function closeWin(){
+        socketObj.emit("exit",name);
+        window.location.href="./index.html";
+        window.close();
+    }
+
+    /*当有人就是无视退出键直接关浏览器*/
+    window.onunload = function(){
+        socketObj.emit("exit",name);
+    }
+
+
+    /*输入昵称并提交之后
+    $("#submitName").click(function () {
+        name = document.getElementById("inputName").value;
+        var popBox = document.getElementById("popBox");
+        var popLayer = document.getElementById("popBoxLayer");
+            popBox.style.display = "none";
+            popLayer.style.display = "none";
+            /*填写完昵称之后发送join事件和name信息
+            socketObj.emit("join",name);
+    })*/
+</script>
+</html>

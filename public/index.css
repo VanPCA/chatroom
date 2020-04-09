@@ -1,0 +1,57 @@
+* {
+    padding: 0;
+    margin: 0;
+    font-family: "Microsoft Yahei";
+}
+html,
+body
+{
+    width: 100%;
+    height: 100%;
+}
+.header
+{
+    height: 7%;
+    background-color: rgb(253, 238, 208)
+}
+.main
+{
+    position: relative;
+    height: 65%;
+    
+}
+.bgImg
+{
+    background-image: url("./background/index.jpg");
+    background-size: 100%;
+    background-repeat: no-repeat;
+    z-index: -1;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    opacity: 0.3;
+}
+.main-words
+{
+    z-index: 0;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.welcome-words
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.footer
+{
+    background-color: rgb(252, 210, 217);
+    height: 28%;
+}

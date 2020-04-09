@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./jquery-3.4.1.min.js"></script>
+    <link rel="stylesheet" href="lounge.css">
+</head>
+<body>
+
+    <div class="sign-up">
+        <!--标题-->
+        <div class="sign-up-title box-width">Be Yourself</div>
+        <!--头像选择-->
+        <div class="head-choose box-width">
+
+            <div class="arrow left-arrow">
+                <div class="before-arrow"></div>
+            </div>
+
+                <img class="p1 img-setting" src="./headPicture/1.jpg">
+                <img class="p2 img-setting" src="./headPicture/2.jpg">
+                <img class="p3 img-setting" id="trueHead" src="./headPicture/3.jpg">
+                <img class="p2 img-setting" src="./headPicture/4.jpg">
+                <img class="p1 img-setting" src="./headPicture/5.jpg">
+
+            <div class="arrow right-arrow">
+                <div class="after-arrow"></div>
+            </div>
+
+        </div>
+
+            <!--昵称确认-->
+            <div class="nameSet box-width">
+                <input id="inputName"  placeholder="请输入昵称" autocomplete="off">
+            </div>
+
+            <!--提交按键-->
+            <div class="nameDecide box-width">
+                <input id="nameSubmit" type="button" value="就决定是你了">
+            </div>
+
+    </div>
+</body>
+
+
+<script src="lounge.js"></script>
+
+<script src="/socket.io/socket.io.js"></script>
+
+<!--点击提交按键前往聊天室，并发送事件-->
+<script>
+//建立io对象
+var socketObj = io();
+//获取提交按键
+var nameSubmit = document.getElementById("nameSubmit");
+//点击提交
+$("#nameSubmit").click(function(){
+    //获取昵称
+   var name = document.getElementById("inputName").value;
+   if(name =="")
+   {
+       alert("不支持莫得昵称就进入呢亲~");
+       return;
+   }
+   //获取头像地址
+   var Head = document.getElementById("trueHead").src;
+   var location = "room1"
+   //打开chatroom
+   window.location.href = "./chatroom1.html";
+   //发送事件
+   socketObj.emit("joining",name,location);
+   socketObj.emit("Head",Head);
+
+})
+</script>
+
+</html>
